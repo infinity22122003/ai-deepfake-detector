@@ -1,0 +1,11 @@
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+torch==2.2.0
+torchvision==0.17.0
+pillow==10.0.0
+numpy==1.26.0
+python-multipart==0.0.6
+opencv-python-headless==4.8.1
+
+# NOTE: For smaller images and CPU-optimized installation consider using the PyTorch CPU wheels:
+# pip install --extra-index-url https://download.pytorch.org/whl/cpu torch torchvision

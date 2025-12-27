@@ -1,25 +1,27 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
+ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
-# Install system deps needed by Pillow/OpenCV etc.
+# system deps for pillow/opencv
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential libjpeg-dev libpng-dev \
+    && apt-get install -y --no-install-recommends gcc libgl1 libglib2.0-0 ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy and install python requirements
-COPY ai-deepfake-detector-render-final-1/backend/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy requirements first for better caching
+COPY backend/requirements.txt /app/backend/requirements.txt
+RUN pip install --upgrade pip setuptools wheel
+# Install PyTorch CPU wheels from official index and other deps
+RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu -r /app/backend/requirements.txt
 
-# Copy backend and frontend into the image
-COPY ai-deepfake-detector-render-final-1/backend/ ./backend
-COPY ai-deepfake-detector-render-final-1/frontend/ ./frontend
+# Copy app and frontend
+COPY backend /app/backend
+COPY frontend /app/frontend
 
-# Expose port
-EXPOSE 8000
+# Expose port and run uvicorn
+EXPOSE 80
 
-# Set working dir to backend so uvicorn can import app:app
-WORKDIR /app/backend
+# Default model path (user must add model.pt in container or mount it)
+ENV MODEL_PATH=/app/model.pt
 
-# Correct exec-form CMD (JSON array with double quotes)
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn","backend.app:app","--host","0.0.0.0","--port","80"]

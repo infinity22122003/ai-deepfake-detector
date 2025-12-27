@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Deepfake Detector</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>AI Deepfake Detector</h1>
+    <p>Upload an image or video (mp4, jpg, png) and get a deepfake probability score.</p>
+
+    <form id="uploadForm">
+      <input id="fileInput" type="file" name="file" accept="image/*,video/*" required />
+      <button id="submitBtn" type="submit">Analyze</button>
+    </form>
+
+    <div id="result" class="result" hidden>
+      <h2>Result</h2>
+      <div id="score"></div>
+      <div id="label"></div>
+      <details id="details" style="display:none">
+        <summary>Per-frame scores</summary>
+        <pre id="frameScores"></pre>
+      </details>
+    </div>
+
+    <div id="error" class="error" hidden></div>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
