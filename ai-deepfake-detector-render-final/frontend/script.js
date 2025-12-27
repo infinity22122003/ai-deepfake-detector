@@ -1,1 +1,0 @@
-async function upload(){const f=document.getElementById('file');if(!f.files.length)return;const fd=new FormData();fd.append('file',f.files[0]);const r=await fetch('/detect-image',{method:'POST',body:fd});document.getElementById('result').innerText=JSON.stringify(await r.json(),null,2);}
