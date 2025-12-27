@@ -1,1 +1,21 @@
-<!DOCTYPE html><html><head><title>AI Fake Image Detector</title></head><body><h2>Upload Image</h2><input type='file' id='file'><button onclick='upload()'>Check</button><pre id='result'></pre><script src='script.js'></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>AI Fake Image Detector</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+      input[type=file] { display:block; margin-bottom: 1rem; }
+      #result { white-space: pre-wrap; background: #f7f7f7; padding: 1rem; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <h2>Upload Image</h2>
+    <input type="file" id="file" accept="image/png, image/jpeg" />
+    <button id="checkBtn">Check</button>
+    <div id="result"></div>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
